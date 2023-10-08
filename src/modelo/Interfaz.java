@@ -15,23 +15,23 @@ import java.awt.event.*;
 
 
 public class Interfaz extends JPanel implements ActionListener{
-	
-	Image Fondo;
+    Image Fondo;
     private Sonido ringtong;
 
     private JTextField txtInputNombre;
-    private JLabel txtNombre,txtCantFiguras,txtPuntaje,txtRanking,txtInstrucciones;//,txtMensaje;
+    private JLabel txtNombre,txtCantFiguras,txtPuntaje,txtRanking,txtInstrucciones, txtFallos;//,txtMensaje;
     private JButton btnJugar,btnSalir,btnRanking,btnInstrucciones,btnFigura1,btnFigura2,btnFigura3,btnFigura4;
     private ImageIcon icono1Escala,icono2Escala,icono3Escala,icono4Escala;
     private Figuras figura1 = new Figuras();
     private Usuario usuarios = new Usuario(); //nombres y puntajes de cada jugador
-    private int indiceUsuario;
+    private int indiceUsuario, fallo;
     
     
     public Interfaz() { // constructor
     	ImageIcon objeto = new ImageIcon("src/images/fondo.png");
 	    Fondo = objeto.getImage();
 	    indiceUsuario = 0;
+            fallo = 0;
 	    ringtong = new Sonido();
     
         setLayout(null);
@@ -47,11 +47,15 @@ public class Interfaz extends JPanel implements ActionListener{
     
         txtCantFiguras = new JLabel("Cant. de Figuras = 4");
         txtCantFiguras.setForeground(Color.white);
-        txtCantFiguras.setBounds(200,0,200, 50);
+        txtCantFiguras.setBounds(150,0,200, 50);
 
         txtPuntaje = new JLabel("Puntaje = 0");
         txtPuntaje.setForeground(Color.white);
-        txtPuntaje.setBounds(400,0,100, 50);
+        txtPuntaje.setBounds(300,0,100, 50);
+        
+        txtFallos = new JLabel("Fallos = " + fallo);
+        txtFallos.setForeground(Color.white);
+        txtFallos.setBounds(400, 0, 100, 50);
         
         txtRanking = new JLabel("--------RANKING--------");
         txtRanking.setForeground(Color.white);
@@ -118,6 +122,7 @@ public class Interfaz extends JPanel implements ActionListener{
         add(txtNombre);
         add(txtCantFiguras);
         add(txtPuntaje);
+        add(txtFallos);
         add(txtRanking);
         add(txtInstrucciones);
         add(btnJugar);
@@ -133,6 +138,7 @@ public class Interfaz extends JPanel implements ActionListener{
         txtNombre.setVisible(false);
         txtCantFiguras.setVisible(false);
         txtPuntaje.setVisible(false);
+        txtFallos.setVisible(false);
         txtRanking.setVisible(false);
         txtInstrucciones.setVisible(false);
         btnSalir.setVisible(false);
@@ -162,7 +168,7 @@ public class Interfaz extends JPanel implements ActionListener{
 	    this.btnFigura3.setIcon(this.icono3Escala);
 	    this.btnFigura4.setIcon(this.icono4Escala);
 	      
-        this.btnFigura1.setBounds(50,150,this.figura1.getLado(0),this.figura1.getLado(0));
+            this.btnFigura1.setBounds(50,150,this.figura1.getLado(0),this.figura1.getLado(0));
 	    this.btnFigura2.setBounds(200,150,this.figura1.getLado(1),this.figura1.getLado(1));
 	    this.btnFigura3.setBounds(300,150,this.figura1.getLado(2),this.figura1.getLado(2));
 	    this.btnFigura4.setBounds(400,150,this.figura1.getLado(3),this.figura1.getLado(3));    
@@ -171,120 +177,147 @@ public class Interfaz extends JPanel implements ActionListener{
     
     
     public void seleccionarBien() {
-    	usuarios.subirPuntaje(this.indiceUsuario);
-	    txtPuntaje.setText("Puntaje = " + usuarios.getPuntaje(this.indiceUsuario));
-	    this.ringtong.realizarSonido("src/sound/correcto.wav");     
+        usuarios.subirPuntaje(this.indiceUsuario);
+        txtPuntaje.setText("Puntaje = " + usuarios.getPuntaje(this.indiceUsuario));
+        this.ringtong.realizarSonido("src/sound/correcto.wav");     
+    }
+    
+    public void seleccionarMal() {
+        this.fallo += 1;
+        this.ringtong.realizarSonido("src/sound/incorrecto.wav");
     }
     
 
     
+        @Override
     public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == btnJugar) {
-    		String nombre = txtInputNombre.getText();
-    	
-    		//Guardar informacion del nombre y puntaje en los JLabel
-	    	txtNombre.setText(nombre);
-	    	//txtPuntaje.setText(0);
-	    	//Añadirlo a la lista
-	    	usuarios.agregarUsuario(nombre);
-	    	//Guardar en la variable indiceUsuario el indice del usuario
-	    	indiceUsuario = usuarios.getIndiceFinal();
-	    	
-	    	txtInputNombre.setVisible(false);
-			txtNombre.setVisible(true);
-		    txtCantFiguras.setVisible(true);
-		    txtPuntaje.setVisible(true);
-		    btnJugar.setVisible(false);
-		    btnSalir.setVisible(true);
-		    btnRanking.setVisible(false);
-		    btnInstrucciones.setVisible(false);
-		    btnFigura1.setVisible(true);
-		    btnFigura2.setVisible(true);
-		    btnFigura3.setVisible(true);
-		    btnFigura4.setVisible(true);
-		    
-		    txtRanking.setVisible(false);
-		    txtInstrucciones.setVisible(false);
+            String nombre = txtInputNombre.getText();
+
+            //Guardar informacion del nombre y puntaje en los JLabel
+            txtNombre.setText(nombre);
+            //txtPuntaje.setText(0);
+            //Añadirlo a la lista
+            usuarios.agregarUsuario(nombre);
+            //Guardar en la variable indiceUsuario el indice del usuario
+            indiceUsuario = usuarios.getIndiceFinal();
+
+            txtInputNombre.setVisible(false);
+            txtNombre.setVisible(true);
+            txtCantFiguras.setVisible(true);
+            txtPuntaje.setVisible(true);
+            txtFallos.setVisible(true);
+            btnJugar.setVisible(false);
+            btnSalir.setVisible(true);
+            btnRanking.setVisible(false);
+            btnInstrucciones.setVisible(false);
+            btnFigura1.setVisible(true);
+            btnFigura2.setVisible(true);
+            btnFigura3.setVisible(true);
+            btnFigura4.setVisible(true);
+
+            txtRanking.setVisible(false);
+            txtInstrucciones.setVisible(false);
 	    }
-	    if (e.getSource() == btnSalir) {
-	    	txtInputNombre.setVisible(true);
-	        txtNombre.setVisible(false);
-	        txtCantFiguras.setVisible(false);
-	        txtPuntaje.setVisible(false);
-	        btnJugar.setVisible(true);
-	        btnSalir.setVisible(false);
-	        btnRanking.setVisible(true);
-		    btnInstrucciones.setVisible(true);
-	        btnFigura1.setVisible(false);
-	        btnFigura2.setVisible(false);
-	        btnFigura3.setVisible(false);
-	        btnFigura4.setVisible(false);
-	        
-		    txtRanking.setVisible(false);
-		    txtInstrucciones.setVisible(false);
-		    
-	    }if (e.getSource() == btnRanking) {
-	    	
-	    	txtRanking.setText(usuarios.getRanking());
-	    	
-	    	txtInputNombre.setVisible(false);
-			txtNombre.setVisible(false);
-		    txtCantFiguras.setVisible(false);
-		    txtPuntaje.setVisible(false);
-		    btnJugar.setVisible(false);
-		    btnSalir.setVisible(true);
-		    btnRanking.setVisible(false);
-		    btnInstrucciones.setVisible(false);
-		    btnFigura1.setVisible(false);
-		    btnFigura2.setVisible(false);
-		    btnFigura3.setVisible(false);
-		    btnFigura4.setVisible(false);
-		    
-		    txtRanking.setVisible(true);
-		    txtInstrucciones.setVisible(false);
-		    
-	    	
-	    }if (e.getSource() == btnInstrucciones) {
-	    	txtInputNombre.setVisible(false);
-			txtNombre.setVisible(false);
-		    txtCantFiguras.setVisible(false);
-		    txtPuntaje.setVisible(false);
-		    btnJugar.setVisible(false);
-		    btnSalir.setVisible(true);
-		    btnRanking.setVisible(false);
-		    btnInstrucciones.setVisible(false);
-		    btnFigura1.setVisible(false);
-		    btnFigura2.setVisible(false);
-		    btnFigura3.setVisible(false);
-		    btnFigura4.setVisible(false);
-		    
-		    txtRanking.setVisible(false);
-		    txtInstrucciones.setVisible(true);
+        if (e.getSource() == btnSalir) {
+            txtInputNombre.setVisible(true);
+            txtNombre.setVisible(false);
+            txtCantFiguras.setVisible(false);
+            txtPuntaje.setVisible(false);
+            txtFallos.setVisible(false);
+            btnJugar.setVisible(true);
+            btnSalir.setVisible(false);
+            btnRanking.setVisible(true);
+            btnInstrucciones.setVisible(true);
+            btnFigura1.setVisible(false);
+            btnFigura2.setVisible(false);
+            btnFigura3.setVisible(false);
+            btnFigura4.setVisible(false);
+            fallo = 0;
+
+            txtRanking.setVisible(false);
+            txtInstrucciones.setVisible(false);
 		    
 	    }
-	    if (e.getSource() == btnFigura2) {
-	      if(this.figura1.getLado(0) == this.figura1.getLado(1)){
+        if (e.getSource() == btnRanking) {
+	    	
+            txtRanking.setText(usuarios.getRanking());
+
+            txtInputNombre.setVisible(false);
+            txtNombre.setVisible(false);
+            txtCantFiguras.setVisible(false);
+            txtPuntaje.setVisible(false);
+            txtFallos.setVisible(false);
+            btnJugar.setVisible(false);
+            btnSalir.setVisible(true);
+            btnRanking.setVisible(false);
+            btnInstrucciones.setVisible(false);
+            btnFigura1.setVisible(false);
+            btnFigura2.setVisible(false);
+            btnFigura3.setVisible(false);
+            btnFigura4.setVisible(false);
+
+            txtRanking.setVisible(true);
+            txtInstrucciones.setVisible(false);
+
+
+	    }
+        if (e.getSource() == btnInstrucciones) {
+            txtInputNombre.setVisible(false);
+            txtNombre.setVisible(false);
+            txtCantFiguras.setVisible(false);
+            txtPuntaje.setVisible(false);
+            txtFallos.setVisible(false);
+
+            btnJugar.setVisible(false);
+            btnSalir.setVisible(true);
+            btnRanking.setVisible(false);
+            btnInstrucciones.setVisible(false);
+            btnFigura1.setVisible(false);
+            btnFigura2.setVisible(false);
+            btnFigura3.setVisible(false);
+            btnFigura4.setVisible(false);
+
+            txtRanking.setVisible(false);
+            txtInstrucciones.setVisible(true);
+
+	    }
+        if (e.getSource() == btnFigura2) {
+            if(this.figura1.getLado(0) == this.figura1.getLado(1)){
+              cambiarFiguras();
+              seleccionarBien();
+            }
+            else{
+                seleccionarMal();
+                cambiarFiguras();
+                }
+        }
+        if (e.getSource() == btnFigura3) {
+            if(this.figura1.getLado(0) == this.figura1.getLado(2)){
+                cambiarFiguras();
+	    	seleccionarBien();
+	      }
+            else{
+                seleccionarMal();
+                cambiarFiguras();
+                }
+        }
+        if (e.getSource() == btnFigura4) {
+            if(this.figura1.getLado(0) == this.figura1.getLado(3)){
 	    	cambiarFiguras();
 	    	seleccionarBien();
 	      }
-	    }
-	    if (e.getSource() == btnFigura3) {
-	      if(this.figura1.getLado(0) == this.figura1.getLado(2)){
-	    	cambiarFiguras();
-	    	seleccionarBien();
-	      }
-	    }
-	    if (e.getSource() == btnFigura4) {
-	      if(this.figura1.getLado(0) == this.figura1.getLado(3)){
-	    	cambiarFiguras();
-	    	seleccionarBien();
-	      }
-	    }    
+            else{
+                seleccionarMal();
+                cambiarFiguras();
+                }
+        }    
     }
 
 
     
     
+        @Override
     public void paintComponent(Graphics g){
     	super.paintComponent(g);
         g.drawImage(Fondo,0,0,null);    
