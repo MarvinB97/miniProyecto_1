@@ -1,10 +1,10 @@
 /*
  * ------------------------------------------------------------
  * Name Proyecto: miniProyecto-1
- * nombre participantes: Alejandro Medina Garcia, Marvin Nuñez
+ * nombre participantes: Alejandro Medina Garcia, Marvin Brayan Nuñez Zuñiga
  * File: Usuario.java
  * Relaciones: Registro del nombre del usuario y de la puntuacion obtenida en el juego
- * Ultima Modificacion : 06-10-23
+ * Ultima Modificacion : 08-10-23
  * Pogramación Orientada a Objetos Grupo 80
  * ------------------------------------------------------------
  */
