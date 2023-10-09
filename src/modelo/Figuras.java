@@ -1,10 +1,10 @@
 /*
  * ------------------------------------------------------------
  * Name Proyecto: miniProyecto-1
- * nombre participantes: Alejandro , Marvin Nuñez
+ * nombre participantes: Alejandro Medina Garcia, Marvin Brayan Nuñez Zuñiga
  * File: Figuras.java
  * Relaciones: subclase en donde se organizan y se obtienen las ubicaciones de las imagenes (figuras)
- * Ultima modificacion 06-10-23
+ * Ultima modificacion 08-10-23
  * Pogramación Orientada a Objetos Grupo 80
  * ------------------------------------------------------------
  */
