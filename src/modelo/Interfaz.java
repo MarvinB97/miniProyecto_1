@@ -1,10 +1,13 @@
 /*
- * Name File : Interfaz.java
+ * ------------------------------------------------------------
+ * Name Proyecto: miniProyecto-1
+ * nombre participantes: Alejandro , Marvin Nuñez
+ * File: Interfaz.java
  * Relaciones: contiene los elementos de la GUI mas la logica del programa
  * Ultima Modificacion : 06-10-23
- * 
+ * Pogramación Orientada a Objetos Grupo 80
+ * ------------------------------------------------------------
  */
-
 
 package modelo;
 
@@ -13,13 +16,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-
 public class Interfaz extends JPanel implements ActionListener{
+
+    //atributos de diferentes tipos
     Image Fondo;
     private Sonido ringtong;
 
     private JTextField txtInputNombre;
-    private JLabel txtNombre,txtCantFiguras,txtPuntaje,txtRanking,txtInstrucciones, txtFallos;//,txtMensaje;
+    private JLabel txtNombre,txtCantFiguras,txtPuntaje,txtRanking,txtInstrucciones, txtFallos;
     private JButton btnJugar,btnSalir,btnRanking,btnInstrucciones,btnFigura1,btnFigura2,btnFigura3,btnFigura4;
     private ImageIcon icono1Escala,icono2Escala,icono3Escala,icono4Escala;
     private Figuras figura1 = new Figuras();
@@ -28,6 +32,8 @@ public class Interfaz extends JPanel implements ActionListener{
     
     
     public Interfaz() { // constructor
+
+   //---Imagen de fondo de pantalla
     	ImageIcon objeto = new ImageIcon("src/images/fondo.png");
 	    Fondo = objeto.getImage();
 	    indiceUsuario = 0;
@@ -87,8 +93,9 @@ public class Interfaz extends JPanel implements ActionListener{
         btnFigura3.setBorder(null);
         btnFigura4.setBorder(null);
 
-
+	//se genera de forma aleatoria las imagenes sobre los botones
         cambiarFiguras();
+	    
   //Se añaden los iconos a los botones
         btnFigura1.setIcon(this.icono1Escala);
         btnFigura2.setIcon(this.icono2Escala);
