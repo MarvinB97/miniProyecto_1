@@ -5,6 +5,7 @@
  * File: Main.java
  * Relaciones: clase principal en donde se ejecuta el codigo
  * Ultima modificacion 06-10-23
+ * Pogramación Orientada a Objetos Grupo 80
  * ------------------------------------------------------------
  */
 
